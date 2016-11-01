@@ -29,6 +29,8 @@ analysisTable$CLFs <- RawData$no_clf_formed
 
 
 #Fund Disbursement 
+#Calculating number of savings bank accounts
+analysisTable$Bank_accounts <- RawData$no_new_shg_three_month_old_bank_account + RawData$no_pre_nrlm_shg_bank_account
 #Calculating eligible SHGs for RF
 analysisTable$eligibleRF <- RawData$no_new_shg_three_month_old_bank_account + RawData$no_pre_nrlm_shg_eligible_for_rf
 #Calculating SHGs provided RF
@@ -96,7 +98,7 @@ write.csv(analysisTable,"/Users/Shantanu/Documents/R_Experiments/MPR_Analysis_Gi
 
 AggregateTables_Cum_Progress_Overall <- analysisTable %>%
   group_by(State) %>%
-  summarize(SHGs_Prom = sum(totalSHGs),VOs_Prom = sum(VO),CLFs_Prom= sum(CLFs),HHs_Mob = sum(totHHs), Num_RF = sum(numRF), Amt_RF =sum(amtRF/100000),Num_CIF = sum(numCIF),Amt_CIF =sum(amtCIF/100000), Num_MCP = sum(MCP),eligible_RF = sum(eligibleRF),six_Month= sum(sixMonth),SHGs_VOs= sum(SHGs_in_VOs)) 
+  summarize(SHGs_Prom = sum(totalSHGs),VOs_Prom = sum(VO),CLFs_Prom= sum(CLFs),HHs_Mob = sum(totHHs), Num_RF = sum(numRF), Amt_RF =sum(amtRF/100000),Num_CIF = sum(numCIF),Amt_CIF =sum(amtCIF/100000), Num_MCP = sum(MCP),eligible_RF = sum(eligibleRF),six_Month= sum(sixMonth),SHGs_VOs= sum(SHGs_in_VOs),Bank_Ac = sum(Bank_accounts)) 
 
 #Exporting Overall Progress - Financial Year
 write.csv (AggregateTables_Cum_Progress_Overall,"/Users/Shantanu/Documents/R_Experiments/MPR_Analysis_Github/Output_files/Cumulative/Overall.csv")
@@ -104,7 +106,7 @@ write.csv (AggregateTables_Cum_Progress_Overall,"/Users/Shantanu/Documents/R_Exp
 #Progress made in FY 16-17 
 AggregateTables_FY_Progress_Overall <- filter (analysisTable,EntryYear == "2016-2017") %>%
 group_by(State) %>%
-  summarize(SHGs_Prom = sum(totalSHGs),VOs_Prom = sum(VO),CLFs_Prom= sum(CLFs),HHs_Mob = sum(totHHs), Num_RF = sum(numRF), Amt_RF =sum(amtRF/100000),Num_CIF = sum(numCIF),Amt_CIF =sum(amtCIF/100000), Num_MCP = sum(MCP),eligible_RF = sum(eligibleRF),six_Month= sum(sixMonth),SHGs_VOs= sum(SHGs_in_VOs))
+  summarize(SHGs_Prom = sum(totalSHGs),VOs_Prom = sum(VO),CLFs_Prom= sum(CLFs),HHs_Mob = sum(totHHs), Num_RF = sum(numRF), Amt_RF =sum(amtRF/100000),Num_CIF = sum(numCIF),Amt_CIF =sum(amtCIF/100000), Num_MCP = sum(MCP),eligible_RF = sum(eligibleRF),six_Month= sum(sixMonth),SHGs_VOs= sum(SHGs_in_VOs),Bank_Ac = sum(Bank_accounts))
 
 #Exporting Overall Progress - Financial Year
 write.csv(AggregateTables_FY_Progress_Overall,"/Users/Shantanu/Documents/R_Experiments/MPR_Analysis_Github/Output_files/FY_16_17/Overall_FY.csv")
@@ -114,14 +116,14 @@ write.csv(AggregateTables_FY_Progress_Overall,"/Users/Shantanu/Documents/R_Exper
 #Cumulative Progress
 AggregateTables_Cum_Progress_NRLP <- filter(analysisTable, BlockType == "NrlpI") %>%
   group_by(State) %>%
-  summarize(SHGs_Prom = sum(totalSHGs),VOs_Prom = sum(VO),CLFs_Prom= sum(CLFs),HHs_Mob = sum(totHHs), Num_RF = sum(numRF), Amt_RF =sum(amtRF/100000),Num_CIF = sum(numCIF),Amt_CIF =sum(amtCIF/100000), Num_MCP = sum(MCP),eligible_RF = sum(eligibleRF),six_Month= sum(sixMonth),SHGs_VOs= sum(SHGs_in_VOs))
+  summarize(SHGs_Prom = sum(totalSHGs),VOs_Prom = sum(VO),CLFs_Prom= sum(CLFs),HHs_Mob = sum(totHHs), Num_RF = sum(numRF), Amt_RF =sum(amtRF/100000),Num_CIF = sum(numCIF),Amt_CIF =sum(amtCIF/100000), Num_MCP = sum(MCP),eligible_RF = sum(eligibleRF),six_Month= sum(sixMonth),SHGs_VOs= sum(SHGs_in_VOs),Bank_Ac = sum(Bank_accounts))
 #Exporting NRLP Progress - Cumulative 
 write.csv(AggregateTables_Cum_Progress_NRLP,"/Users/Shantanu/Documents/R_Experiments/MPR_Analysis_Github/Output_files/Cumulative/NRLP_Cumulative.csv")
 
 #Progress made in FY 16-17 
 AggregateTables_FY_Progress_NRLP <- filter (analysisTable, BlockType == "NrlpI", EntryYear == "2016-2017") %>%
   group_by(State) %>%
-  summarize(SHGs_Prom = sum(totalSHGs),VOs_Prom = sum(VO),CLFs_Prom= sum(CLFs),HHs_Mob = sum(totHHs), Num_RF = sum(numRF), Amt_RF =sum(amtRF/100000),Num_CIF = sum(numCIF),Amt_CIF =sum(amtCIF/100000), Num_MCP = sum(MCP),eligible_RF = sum(eligibleRF),six_Month= sum(sixMonth),SHGs_VOs= sum(SHGs_in_VOs))
+  summarize(SHGs_Prom = sum(totalSHGs),VOs_Prom = sum(VO),CLFs_Prom= sum(CLFs),HHs_Mob = sum(totHHs), Num_RF = sum(numRF), Amt_RF =sum(amtRF/100000),Num_CIF = sum(numCIF),Amt_CIF =sum(amtCIF/100000), Num_MCP = sum(MCP),eligible_RF = sum(eligibleRF),six_Month= sum(sixMonth),SHGs_VOs= sum(SHGs_in_VOs),Bank_Ac = sum(Bank_accounts))
 #Exporting Files - NRLP- Financial Year
 write.csv(AggregateTables_FY_Progress_NRLP,"/Users/Shantanu/Documents/R_Experiments/MPR_Analysis_Github/Output_files/FY_16_17/NRLP_FY.csv")
 
@@ -132,14 +134,14 @@ write.csv(AggregateTables_FY_Progress_NRLP,"/Users/Shantanu/Documents/R_Experime
 #Cumulative Progress
 AggregateTables_Cum_Progress_NRLP_NRLM_SRLP <- filter(analysisTable,BlockType == "NrlpI" | BlockType == "NrlmI" | BlockType == "OSrlpI") %>%
   group_by(State) %>%
-  summarize(SHGs_Prom = sum(totalSHGs),VOs_Prom = sum(VO),CLFs_Prom= sum(CLFs),HHs_Mob = sum(totHHs), Num_RF = sum(numRF), Amt_RF =sum(amtRF/100000),Num_CIF = sum(numCIF),Amt_CIF =sum(amtCIF/100000), Num_MCP = sum(MCP),eligible_RF = sum(eligibleRF),six_Month= sum(sixMonth),SHGs_VOs= sum(SHGs_in_VOs))
+  summarize(SHGs_Prom = sum(totalSHGs),VOs_Prom = sum(VO),CLFs_Prom= sum(CLFs),HHs_Mob = sum(totHHs), Num_RF = sum(numRF), Amt_RF =sum(amtRF/100000),Num_CIF = sum(numCIF),Amt_CIF =sum(amtCIF/100000), Num_MCP = sum(MCP),eligible_RF = sum(eligibleRF),six_Month= sum(sixMonth),SHGs_VOs= sum(SHGs_in_VOs),Bank_Ac = sum(Bank_accounts))
 #Exporting Files - NRLP/NRLM/SRLP - Cumulative
 write.csv(AggregateTables_Cum_Progress_NRLP_NRLM_SRLP,"/Users/Shantanu/Documents/R_Experiments/MPR_Analysis_Github/Output_files/Cumulative/NRLP_NRLM_SRLP_Cumulative.csv")
 
 #Progress made in FY 16-17 
 AggregateTables_FY_Progress_NRLP_NRLM_SRLP <- filter (analysisTable,BlockType == "NrlpI" | BlockType == "NrlmI" | BlockType == "OSrlpI", EntryYear == "2016-2017") %>%
   group_by(State) %>%
-  summarize(SHGs_Prom = sum(totalSHGs),VOs_Prom = sum(VO),CLFs_Prom= sum(CLFs),HHs_Mob = sum(totHHs), Num_RF = sum(numRF), Amt_RF =sum(amtRF/100000),Num_CIF = sum(numCIF),Amt_CIF =sum(amtCIF/100000), Num_MCP = sum(MCP),eligible_RF = sum(eligibleRF),six_Month= sum(sixMonth),SHGs_VOs= sum(SHGs_in_VOs))
+  summarize(SHGs_Prom = sum(totalSHGs),VOs_Prom = sum(VO),CLFs_Prom= sum(CLFs),HHs_Mob = sum(totHHs), Num_RF = sum(numRF), Amt_RF =sum(amtRF/100000),Num_CIF = sum(numCIF),Amt_CIF =sum(amtCIF/100000), Num_MCP = sum(MCP),eligible_RF = sum(eligibleRF),six_Month= sum(sixMonth),SHGs_VOs= sum(SHGs_in_VOs),Bank_Ac = sum(Bank_accounts))
 
 #Exporting Files - NRLP/NRLM/SRLP - Financial Year
 write.csv(AggregateTables_FY_Progress_NRLP_NRLM_SRLP,"/Users/Shantanu/Documents/R_Experiments/MPR_Analysis_Github/Output_files/FY_16_17/NRLP_NRLM_SRLP_FY.csv")
@@ -149,14 +151,14 @@ write.csv(AggregateTables_FY_Progress_NRLP_NRLM_SRLP,"/Users/Shantanu/Documents/
 #Cumulative Progress
 AggregateTables_Cum_Progress_NRLP_NRLM <- filter(analysisTable,BlockType == "NrlpI" | BlockType == "NrlmI") %>%
   group_by(State) %>%
-  summarize(SHGs_Prom = sum(totalSHGs),VOs_Prom = sum(VO),CLFs_Prom= sum(CLFs),HHs_Mob = sum(totHHs), Num_RF = sum(numRF), Amt_RF =sum(amtRF/100000),Num_CIF = sum(numCIF),Amt_CIF =sum(amtCIF/100000), Num_MCP = sum(MCP),eligible_RF = sum(eligibleRF),six_Month= sum(sixMonth),SHGs_VOs= sum(SHGs_in_VOs))
+  summarize(SHGs_Prom = sum(totalSHGs),VOs_Prom = sum(VO),CLFs_Prom= sum(CLFs),HHs_Mob = sum(totHHs), Num_RF = sum(numRF), Amt_RF =sum(amtRF/100000),Num_CIF = sum(numCIF),Amt_CIF =sum(amtCIF/100000), Num_MCP = sum(MCP),eligible_RF = sum(eligibleRF),six_Month= sum(sixMonth),SHGs_VOs= sum(SHGs_in_VOs),Bank_Ac = sum(Bank_accounts))
 #Exporting Files - NRLM/NRLM - Overall
 write.csv(AggregateTables_Cum_Progress_NRLP_NRLM,"/Users/Shantanu/Documents/R_Experiments/MPR_Analysis_Github/Output_files/Cumulative/NRLP_NRLM_Cumulative.csv")
 
 #Progress made in FY 16-17 
 AggregateTables_FY_Progress_NRLP_NRLM<- filter(analysisTable, BlockType == "NrlpI" | BlockType == "NrlmI", EntryYear == "2016-2017") %>%
   group_by(State) %>%
-  summarize(SHGs_Prom = sum(totalSHGs),VOs_Prom = sum(VO),CLFs_Prom= sum(CLFs),HHs_Mob = sum(totHHs), Num_RF = sum(numRF), Amt_RF =sum(amtRF/100000),Num_CIF = sum(numCIF),Amt_CIF =sum(amtCIF/100000), Num_MCP = sum(MCP),eligible_RF = sum(eligibleRF),six_Month= sum(sixMonth),SHGs_VOs= sum(SHGs_in_VOs))
+  summarize(SHGs_Prom = sum(totalSHGs),VOs_Prom = sum(VO),CLFs_Prom= sum(CLFs),HHs_Mob = sum(totHHs), Num_RF = sum(numRF), Amt_RF =sum(amtRF/100000),Num_CIF = sum(numCIF),Amt_CIF =sum(amtCIF/100000), Num_MCP = sum(MCP),eligible_RF = sum(eligibleRF),six_Month= sum(sixMonth),SHGs_VOs= sum(SHGs_in_VOs),Bank_Ac = sum(Bank_accounts))
 
 #Exporting Files - NRLP/NRLM - Financial Year 
 write.csv(AggregateTables_FY_Progress_NRLP_NRLM,"/Users/Shantanu/Documents/R_Experiments/MPR_Analysis_Github/Output_files/FY_16_17/NRLP_NRLM_FY.csv")
